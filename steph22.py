@@ -2,18 +2,18 @@ from email import header
 from gettext import install
 from lib2to3.pgen2.pgen import DFAState
 from turtle import color
+from matplotlib import markers
+from pyrsistent import freeze
 import streamlit as st
 import pandas as pd
 from PIL import Image
 from streamlit_option_menu import option_menu
-#st. set_page_config(layout="wide")
 st.set_page_config(page_icon="images.jpg",layout="wide")
 font = "monospace"
 st.subheader("MSBA350 Healthcare Analytics - Stephanie Abdelnour")
 st.title("Road Traffic Accidents")
 menu = option_menu(None, ["Home","Dataset","Dashboard"],icons=['house',"cloud","bar-chart-line"],menu_icon="cast", default_index=0, orientation="horizontal", styles={"container": {"padding": "0!important", "background-color": "#fafafa"},"icon": {"color": "black", "font-size": "25px"}, "nav-link": {"font-size": "15px", "text-align": "left", "margin":"0px", "--hover-color": "#eee"},"nav-link-selected": {"background-color": "#FF3366"},})
 
-#if menu == "Home":st.image(C:\Users\User\Desktop\myproject\Accident-banner.jpg)
 if menu=="Dataset": st.write("This data set is collected from Addis Ababa Sub city police departments for Masters research work. It has been prepared from manual records of road traffic accident of the year 2017-20.")
 
 
@@ -26,7 +26,6 @@ import pandas as pd
 import numpy as np
 df= pd.read_csv("output(6).csv", sep='\t',  error_bad_lines=False)
 
-#, sep='\t',  error_bad_lines=False
 if menu=="Dataset": st.write(df)
 from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
@@ -82,17 +81,7 @@ ax1.pie(sizes, explode=explode, labels=labels, colors=colors, autopct='%1.1f%%',
 ax1.axis('equal') 
 if menu=="Dashboard": col1.write(fig1)
 
-#Severity
-#import plotly.figure_factory as ff
-#x1 = np.random.randn(200) - 2
-#x2 = np.random.randn(200)
-#x3 = np.random.randn(200) + 2
-#colors = ['#4F6272', '#B7C3F3', '#DD7596', '#8EB897']
-#hist_data = [x1, x2, x3]
-#group_labels = ['Slight injury', 'Serious injury', 'Fatal injury']
-#fig = ff.create_distplot(hist_data, group_labels, colors=colors, bin_size=[.1, .25, .5])
-#if menu=="Dashboard": st.plotly_chart(fig, use_container_width=True)
-#if menu =="Dashboard": st.write("Slight Injuries is the most common injury")
+
 
 #Fig1: Age/Gender/Severity
 fig1 = alt.Chart(df).mark_point().encode(
@@ -145,27 +134,6 @@ if menu=="Dashboard":col2.write(fig)
 
 
 
-#fig3 Severity/Road conditions/weather conditions: Error
-#df2=df.groupby('Accident_severity')['Road_surface_conditions'].value_counts().unstack().fillna(0)
-#st.write(df2)
-#fig = px.imshow(df1,
- #               labels=dict(x="Road_surface_conditions", y="Weather_conditions", color="Accident_severity"),
-  #              y=['Cloudy', 'Normal', 'Raining', 'Raining and Windy', 'Snow', 'Windy'],
-   #             x=['Dry', 'Snow', 'Wet or damp','Flood over 3cm deep'],
-    #           )
-#fig.update_xaxes(side="top")
-#if menu=="Dashboard":st.write(fig)
-
-#fig4 Severity/gender percentage
-#import seaborn as sns
-#char1= sns.countplot(x="Accident_severity", data=df).set(title="Accident Severity Distribution")
-#gender = (df.groupby(['Gender_of_driver'])['Accident_severity'].value_counts(normalize=True).rename('percentage').mul(100).reset_index().sort_values('Accident_severity'))
-#fig4=plt.figure(figsize=(10,8))
-#bar=sns.barplot(x="Accident_severity", y="percentage", hue="Gender_of_driver", palette="cubehelix", data= "Gender_of_driver")
-#sns.color_palette("light:#5A9", as_cmap=True)
-#plt.title("Accident Severity By Gender")
-#plt.xlabel("Accident Severity")
-#if menu=="Dashboard":col1.pyplot(fig4)
 
 
 #Cause of accident count
